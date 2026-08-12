@@ -1,10 +1,17 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
   title: "CAPCRE Agro Business | Do Campo à Colheita",
   description:
     "Tecnologia, soluções financeiras e assessoria inteligente: Agro Trading & Barter, locação de máquinas e consultoria agronômica.",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#0B1E13",
 };
 
 export default function RootLayout({

@@ -114,7 +114,7 @@ function WhatsAppIcon({ className = "h-4 w-4" }: { className?: string }) {
 
 /**
  * Cabeçalho editorial: rótulo com filete dourado, título grande à esquerda e
- * subtítulo em coluna secundária separada por hairline — sem badge/pílula.
+ * subtítulo em coluna secundária separada por hairline, sem badge/pílula.
  */
 function SectionHeading({
   eyebrow,
@@ -134,11 +134,11 @@ function SectionHeading({
       viewport={{ once: true, amount: 0.35 }}
     >
       <motion.div variants={fadeUp} className="md:col-span-7">
-        <span className="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.32em] text-emerald-300/90">
+        <span className="flex items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-emerald-300/90 sm:text-[11px] sm:tracking-[0.32em]">
           <span className="h-px w-10 bg-gradient-to-r from-gold to-gold/0" />
           {eyebrow}
         </span>
-        <h2 className="mt-5 font-display text-balance text-[1.9rem] font-bold leading-[1.08] tracking-tight text-white md:text-[2.6rem] lg:text-5xl">
+        <h2 className="mt-5 font-display text-balance text-[1.65rem] font-bold leading-[1.12] tracking-tight text-white sm:text-[1.9rem] md:text-[2.6rem] md:leading-[1.08] lg:text-5xl">
           {title}
         </h2>
       </motion.div>
@@ -244,8 +244,11 @@ function Navbar() {
 
       <div
         id="mobile-menu"
+        aria-hidden={!open}
         className={`overflow-hidden border-t border-white/10 bg-[#0B1E13]/95 backdrop-blur-md transition-[max-height,opacity] duration-300 md:hidden ${
-          open ? "max-h-80 opacity-100" : "max-h-0 border-t-0 opacity-0"
+          open
+            ? "max-h-96 opacity-100"
+            : "pointer-events-none invisible max-h-0 border-t-0 opacity-0"
         }`}
       >
         <ul className="flex flex-col gap-1 px-5 py-3">
@@ -253,7 +256,7 @@ function Navbar() {
             <li key={link.href}>
               <a
                 href={link.href}
-                className="block cursor-pointer rounded-lg px-3 py-3 text-sm font-medium text-zinc-200 hover:bg-white/5 hover:text-emerald-400"
+                className="flex min-h-11 cursor-pointer items-center rounded-lg px-3 py-3 text-sm font-medium text-zinc-200 hover:bg-white/5 hover:text-emerald-400"
                 onClick={() => setOpen(false)}
               >
                 {link.label}
@@ -279,7 +282,7 @@ function Navbar() {
 }
 
 /* -------------------------------------------------------------------------- */
-/* Hero — vídeo em loop + texto/botões somem no scroll; depois a página desce */
+/* Hero: vídeo em loop + texto/botões somem no scroll; depois a página desce  */
 /* -------------------------------------------------------------------------- */
 
 function Hero() {
@@ -322,9 +325,9 @@ function Hero() {
   }, []);
 
   return (
-    <div id="topo" ref={containerRef} className="relative h-[200vh] bg-ink">
+    <div id="topo" ref={containerRef} className="relative h-[200svh] bg-ink">
       {/* Sticky: o vídeo fica fixo enquanto o texto some; depois a página desce */}
-      <div className="sticky top-0 h-screen w-full overflow-hidden">
+      <div className="sticky top-0 h-[100svh] w-full overflow-hidden">
         <video
           ref={videoRef}
           src="/video-campo.mp4"
@@ -350,20 +353,20 @@ function Hero() {
                   pointerEvents: contentPointerEvents,
                 }
           }
-          className="relative z-10 mx-auto flex h-full max-w-4xl flex-col items-center justify-center px-4 text-center"
+          className="relative z-10 mx-auto flex h-full max-w-4xl flex-col items-center justify-center px-5 pb-24 pt-20 text-center md:pb-28 md:pt-24"
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <motion.img
             src="/logo.png"
             alt="CAPCRE Agro Business"
-            className="mb-4 h-40 w-auto object-contain drop-shadow-[0_8px_24px_rgba(0,0,0,0.55)] md:h-56"
+            className="mb-3 h-28 w-auto object-contain drop-shadow-[0_8px_24px_rgba(0,0,0,0.55)] sm:h-36 md:mb-4 md:h-56"
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ ...springSoft, delay: 0.15 }}
           />
 
           <motion.h1
-            className="mb-6 font-display text-balance text-3xl font-extrabold leading-tight text-white [text-shadow:0_2px_18px_rgba(0,0,0,0.75),0_1px_3px_rgba(0,0,0,0.9)] md:text-5xl"
+            className="mb-4 font-display text-balance text-[1.7rem] font-extrabold leading-[1.15] text-white [text-shadow:0_2px_18px_rgba(0,0,0,0.75),0_1px_3px_rgba(0,0,0,0.9)] sm:text-3xl md:mb-6 md:text-5xl"
             initial={{ opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ ...springSoft, delay: 0.28 }}
@@ -373,7 +376,7 @@ function Hero() {
           </motion.h1>
 
           <motion.p
-            className="mb-8 max-w-2xl text-lg text-zinc-200 [text-shadow:0_2px_12px_rgba(0,0,0,0.8)] md:text-xl"
+            className="mb-7 max-w-2xl text-[0.95rem] leading-relaxed text-zinc-200 [text-shadow:0_2px_12px_rgba(0,0,0,0.8)] sm:text-lg md:mb-8 md:text-xl"
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ ...springSoft, delay: 0.42 }}
@@ -383,7 +386,7 @@ function Hero() {
           </motion.p>
 
           <motion.div
-            className="flex flex-wrap justify-center gap-4"
+            className="flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row sm:justify-center sm:gap-4"
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ ...springSoft, delay: 0.55 }}
@@ -392,7 +395,7 @@ function Hero() {
               href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-emerald-500 px-6 py-3 font-semibold text-slate-950 shadow-lg shadow-emerald-500/20 transition-colors hover:bg-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300"
+              className="inline-flex w-full max-w-xs cursor-pointer items-center justify-center gap-2 rounded-xl bg-emerald-500 px-6 py-3.5 font-semibold text-slate-950 shadow-lg shadow-emerald-500/20 transition-colors hover:bg-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 sm:w-auto sm:py-3"
               whileHover={{ y: -2 }}
               whileTap={{ scale: 0.97 }}
               transition={springTap}
@@ -402,7 +405,7 @@ function Hero() {
             </motion.a>
             <motion.a
               href="#atuacao"
-              className="inline-flex cursor-pointer items-center rounded-xl border border-white/20 bg-white/10 px-6 py-3 text-white backdrop-blur-sm transition-colors hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+              className="inline-flex w-full max-w-xs cursor-pointer items-center justify-center rounded-xl border border-white/20 bg-white/10 px-6 py-3.5 text-white backdrop-blur-sm transition-colors hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 sm:w-auto sm:py-3"
               whileHover={{ y: -2 }}
               whileTap={{ scale: 0.97 }}
               transition={springTap}
@@ -413,15 +416,15 @@ function Hero() {
         </motion.div>
 
         <motion.div
-          className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2 text-zinc-200 [text-shadow:0_2px_10px_rgba(0,0,0,0.8)]"
+          className="pointer-events-none absolute bottom-5 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2 text-zinc-200 [text-shadow:0_2px_10px_rgba(0,0,0,0.8)] [@media(max-height:640px)]:hidden md:bottom-8"
           style={reduce ? undefined : { opacity: hintOpacity }}
           aria-hidden
         >
-          <span className="text-[10px] uppercase tracking-[0.3em]">
+          <span className="whitespace-nowrap text-[9px] uppercase tracking-[0.28em] md:text-[10px] md:tracking-[0.3em]">
             Role para explorar
           </span>
           <motion.span
-            className="h-8 w-px bg-gradient-to-b from-emerald-400 to-transparent"
+            className="h-6 w-px bg-gradient-to-b from-emerald-400 to-transparent md:h-8"
             animate={{ scaleY: [1, 0.4, 1], opacity: [0.8, 0.3, 0.8] }}
             transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
           />
@@ -452,7 +455,7 @@ function ServiceRow({
   return (
     <motion.article
       variants={fadeUp}
-      className="group grid items-center gap-8 border-t border-white/10 py-12 md:grid-cols-12 md:gap-14 md:py-16"
+      className="group grid items-center gap-7 border-t border-white/10 py-10 md:grid-cols-12 md:gap-14 md:py-16"
     >
       <div
         className={`relative md:col-span-6 lg:col-span-5 ${
@@ -464,7 +467,7 @@ function ServiceRow({
           <img
             src={encodeURI(service.image)}
             alt={service.title}
-            className="aspect-[5/4] w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.06]"
+            className="aspect-[4/3] w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.06] md:aspect-[5/4]"
             loading="lazy"
           />
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/10 to-transparent" />
@@ -472,8 +475,8 @@ function ServiceRow({
 
         <span
           aria-hidden
-          className={`absolute -top-6 font-display text-6xl font-extrabold leading-none text-white/10 transition-colors duration-500 group-hover:text-gold/25 md:text-7xl ${
-            flipped ? "-right-2 md:-right-6" : "-left-2 md:-left-6"
+          className={`absolute top-3 font-display text-5xl font-extrabold leading-none text-white/20 transition-colors duration-500 group-hover:text-gold/30 md:-top-6 md:text-7xl md:text-white/10 ${
+            flipped ? "right-4 md:-right-6" : "left-4 md:-left-6"
           }`}
         >
           {number}
@@ -485,11 +488,11 @@ function ServiceRow({
           flipped ? "md:order-1 md:col-start-1 lg:col-start-2" : "lg:col-start-7"
         }`}
       >
-        <span className="text-[11px] font-semibold uppercase tracking-[0.3em] text-emerald-300/80">
+        <span className="text-[10px] font-semibold uppercase tracking-[0.24em] text-emerald-300/80 sm:text-[11px] sm:tracking-[0.3em]">
           Frente {number}
         </span>
 
-        <h3 className="mt-4 font-display text-2xl font-bold leading-tight text-white md:text-[1.75rem]">
+        <h3 className="mt-3 font-display text-[1.4rem] font-bold leading-tight text-white sm:text-2xl md:mt-4 md:text-[1.75rem]">
           {service.title}
         </h3>
 
@@ -510,7 +513,7 @@ function ServiceRow({
           href={WHATSAPP_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-7 inline-flex cursor-pointer items-center gap-2 text-sm font-semibold text-emerald-300 outline-none transition-colors hover:text-emerald-200 focus-visible:ring-2 focus-visible:ring-emerald-400"
+          className="mt-6 inline-flex min-h-11 cursor-pointer items-center gap-2 text-sm font-semibold text-emerald-300 outline-none transition-colors hover:text-emerald-200 focus-visible:ring-2 focus-visible:ring-emerald-400 md:mt-7"
         >
           Falar sobre esta frente
           <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1">
@@ -543,7 +546,7 @@ function ServicesSection() {
               </span>
             </>
           }
-          subtitle="Do grão à máquina, da documentação à estratégia financeira — a CAPCRE acompanha o produtor em cada etapa do ciclo."
+          subtitle="Do grão à máquina, da documentação à estratégia financeira, a CAPCRE acompanha o produtor em cada etapa do ciclo."
         />
 
         <motion.div
@@ -605,16 +608,16 @@ function MetricsSection() {
             <motion.div
               key={metric.label}
               variants={fadeUp}
-              className={`group py-10 md:py-4 ${
+              className={`group py-8 md:py-4 ${
                 i === 0 ? "md:pr-10" : i === METRICS.length - 1 ? "md:pl-10" : "md:px-10"
               }`}
             >
-              <dt className="flex items-center gap-2.5 text-[11px] font-semibold uppercase tracking-[0.28em] text-zinc-500">
-                <span className="h-1.5 w-1.5 rounded-full bg-gold/70 transition-colors duration-300 group-hover:bg-gold" />
+              <dt className="flex items-center gap-2.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-zinc-500 sm:text-[11px] md:tracking-[0.28em]">
+                <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-gold/70 transition-colors duration-300 group-hover:bg-gold" />
                 {metric.label}
               </dt>
 
-              <dd className="mt-4 font-display text-[3.25rem] font-extrabold leading-none tracking-tight md:text-6xl">
+              <dd className="mt-3 font-display text-[2.75rem] font-extrabold leading-none tracking-tight sm:text-[3.25rem] md:mt-4 md:text-6xl">
                 <span className="bg-gradient-to-br from-emerald-200 via-emerald-400 to-gold bg-clip-text text-transparent">
                   <AnimatedCounter
                     value={metric.value}
@@ -652,10 +655,10 @@ function Footer() {
   return (
     <footer
       id="contato"
-      className="relative scroll-mt-20 border-t border-white/10 bg-ink pt-16 pb-8 text-zinc-300"
+      className="relative scroll-mt-20 border-t border-white/10 bg-ink pt-14 pb-10 text-zinc-300 md:pt-16 md:pb-8"
     >
-      <div className="mx-auto grid max-w-7xl gap-12 px-5 md:grid-cols-4 md:px-8">
-        <div className="md:col-span-2">
+      <div className="mx-auto grid max-w-7xl gap-10 px-5 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-12 md:grid-cols-4 md:gap-12 md:px-8">
+        <div className="sm:col-span-2">
           <a
             href="#topo"
             className="inline-flex cursor-pointer rounded-2xl outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
@@ -664,66 +667,66 @@ function Footer() {
             <img
               src="/logo.png"
               alt="CAPCRE Agro Business"
-              className="h-16 w-auto object-contain md:h-[4.5rem]"
+              className="h-14 w-auto object-contain sm:h-16 md:h-[4.5rem]"
             />
           </a>
-          <p className="mt-5 max-w-md text-sm leading-relaxed text-zinc-400">
+          <p className="mt-4 max-w-md text-sm leading-relaxed text-zinc-400 md:mt-5">
             Tecnologia, soluções financeiras e assessoria inteligente do campo
-            à colheita — conectando produtores a operações de grãos, maquinário
+            à colheita. Conectamos produtores a operações de grãos, maquinário
             e consultoria especializada.
           </p>
         </div>
 
-        <div>
-          <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-400">
+        <nav aria-label="Rodapé">
+          <h3 className="text-[11px] font-semibold uppercase tracking-[0.2em] text-emerald-400">
             Navegação
           </h3>
-          <ul className="mt-4 space-y-2.5">
+          <ul className="mt-3 space-y-1 md:mt-4">
             {NAV_LINKS.map((link) => (
               <li key={link.href}>
                 <a
                   href={link.href}
-                  className="cursor-pointer text-sm text-zinc-400 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
+                  className="inline-flex min-h-9 cursor-pointer items-center text-sm text-zinc-400 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
                 >
                   {link.label}
                 </a>
               </li>
             ))}
           </ul>
-        </div>
+        </nav>
 
         <div>
-          <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-400">
+          <h3 className="text-[11px] font-semibold uppercase tracking-[0.2em] text-emerald-400">
             Contato
           </h3>
-          <ul className="mt-4 space-y-3 text-sm text-zinc-400">
+          <ul className="mt-3 space-y-1 text-sm text-zinc-400 md:mt-4">
             <li>
               <a
                 href={WHATSAPP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex cursor-pointer items-center gap-2 transition-colors hover:text-white"
+                className="inline-flex min-h-9 cursor-pointer items-center gap-2 transition-colors hover:text-white"
               >
-                <WhatsAppIcon className="h-4 w-4" />
+                <WhatsAppIcon className="h-4 w-4 shrink-0" />
                 Falar com Consultor
               </a>
             </li>
             <li>
               <a
                 href="mailto:contato@capcre.com.br"
-                className="cursor-pointer transition-colors hover:text-white"
+                className="inline-flex min-h-9 cursor-pointer items-center break-all transition-colors hover:text-white"
               >
                 contato@capcre.com.br
               </a>
             </li>
-            <li className="leading-relaxed">
-              Brasil — Atendimento a produtores e parceiros do agronegócio
+            <li className="pt-2 text-[0.8rem] leading-relaxed text-zinc-500">
+              Brasil. Atendimento a produtores e parceiros do agronegócio
             </li>
           </ul>
         </div>
       </div>
 
-      <div className="mx-auto mt-12 flex max-w-7xl flex-col items-center justify-between gap-3 border-t border-white/10 px-5 pt-6 text-xs text-zinc-500 md:flex-row md:px-8">
+      <div className="mx-auto mt-10 flex max-w-7xl flex-col items-center justify-between gap-2 border-t border-white/10 px-5 pt-6 text-center text-[0.7rem] text-zinc-500 sm:text-xs md:mt-12 md:flex-row md:gap-3 md:px-8 md:text-left">
         <p>
           © {new Date().getFullYear()} CAPCRE Agro Business. Todos os direitos
           reservados.
