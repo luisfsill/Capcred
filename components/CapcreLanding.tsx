@@ -439,8 +439,8 @@ function Hero() {
 /* -------------------------------------------------------------------------- */
 
 /**
- * Linha editorial: imagem e texto alternam de lado a cada frente, com numeral
- * de índice e filete que cresce ao entrar na viewport.
+ * Linha editorial: imagem e texto alternam de lado a cada frente, com filete
+ * que cresce ao entrar na viewport.
  */
 function ServiceRow({
   service,
@@ -472,15 +472,6 @@ function ServiceRow({
           />
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/10 to-transparent" />
         </div>
-
-        <span
-          aria-hidden
-          className={`absolute top-3 font-display text-5xl font-extrabold leading-none text-white/20 transition-colors duration-500 group-hover:text-gold/30 md:-top-6 md:text-7xl md:text-white/10 ${
-            flipped ? "right-4 md:-right-6" : "left-4 md:-left-6"
-          }`}
-        >
-          {number}
-        </span>
       </div>
 
       <div
