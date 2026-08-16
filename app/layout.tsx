@@ -5,6 +5,10 @@ export const metadata: Metadata = {
   title: "CAPCRED Agro Business | Do Campo à Colheita",
   description:
     "Tecnologia, soluções financeiras e assessoria inteligente: Agro Trading & Barter, locação de máquinas e consultoria agronômica.",
+  icons: {
+    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
+    shortcut: "/favicon.svg",
+  },
 };
 
 export const viewport: Viewport = {
