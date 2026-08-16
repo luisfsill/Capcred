@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "CAPCRE Agro Business | Do Campo à Colheita",
+  title: "CAPCRED Agro Business | Do Campo à Colheita",
   description:
     "Tecnologia, soluções financeiras e assessoria inteligente: Agro Trading & Barter, locação de máquinas e consultoria agronômica.",
 };

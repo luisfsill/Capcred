@@ -1,5 +1,7 @@
 "use client";
 
+import { LiquidButton } from "@/components/ui/liquid-glass-button";
+import { cn } from "@/lib/utils";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
   motion,
@@ -17,10 +19,28 @@ import {
 /* Constants                                                                  */
 /* -------------------------------------------------------------------------- */
 
+const COMPANY = {
+  legalName: "CAPCRED AGRONEGOCIOS LTDA",
+  brandName: "CAPCRED Agro Business",
+  cnpj: "43.371.729/0003-49",
+  email: "contato@capcredagrobusiness.com",
+  phoneDisplay: "(47) 98888-4161",
+  phoneE164: "5547988884161",
+  instagramUrl: "https://www.instagram.com/capcred/",
+  instagramHandle: "@capcred",
+  address: {
+    street: "Rua Avertano Rocha, 192, Sala 02",
+    district: "Campina",
+    city: "Belém",
+    state: "PA",
+    cep: "66.023-120",
+  },
+} as const;
+
 const WHATSAPP_URL =
-  "https://wa.me/5500000000000?text=" +
+  `https://wa.me/${COMPANY.phoneE164}?text=` +
   encodeURIComponent(
-    "Olá, gostaria de falar com um consultor da CAPCRE Agro Business.",
+    `Olá, gostaria de falar com um consultor da ${COMPANY.brandName}.`,
   );
 
 const NAV_LINKS = [
@@ -104,6 +124,94 @@ function WhatsAppIcon({ className = "h-4 w-4" }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden>
       <path d="M20.5 3.5A11 11 0 0 0 2.1 17.8L1 23l5.4-1.1A11 11 0 0 0 12 23a11 11 0 0 0 8.5-19.5zM12 21.1a9.1 9.1 0 0 1-4.6-1.3l-.33-.2-3.2.67.68-3.12-.21-.33A9.1 9.1 0 1 1 12 21.1zm5-6.8c-.27-.14-1.6-.79-1.85-.88-.25-.09-.43-.14-.61.14-.18.27-.7.88-.86 1.06-.16.18-.32.2-.59.07-.27-.14-1.14-.42-2.17-1.34-.8-.71-1.34-1.6-1.5-1.86-.16-.27-.02-.41.12-.55.12-.12.27-.32.41-.48.14-.16.18-.27.27-.45.09-.18.05-.34-.02-.48-.07-.14-.61-1.47-.84-2.01-.22-.53-.44-.46-.61-.46h-.52c-.18 0-.48.07-.73.34-.25.27-.96.94-.96 2.29 0 1.35.98 2.66 1.12 2.84.14.18 1.93 2.95 4.68 4.14.65.28 1.16.45 1.56.57.65.21 1.25.18 1.72.11.52-.08 1.6-.65 1.83-1.28.23-.63.23-1.17.16-1.28-.07-.11-.25-.18-.52-.32z" />
+    </svg>
+  );
+}
+
+/**
+ * CTA WhatsApp — Liquid Glass dourado (cor da marca).
+ * tone="ghost": só borda + transparente, com salto no hover (navbar / mobile).
+ */
+function WhatsAppCta({
+  size = "md",
+  fullWidth = false,
+  className = "",
+  onClick,
+  tone = "default",
+}: {
+  size?: "sm" | "md" | "lg";
+  fullWidth?: boolean;
+  className?: string;
+  onClick?: () => void;
+  tone?: "default" | "ghost";
+}) {
+  const liquidSize = size === "sm" ? "sm" : size === "lg" ? "xl" : "lg";
+
+  if (tone === "ghost") {
+    const sizeClass =
+      size === "sm"
+        ? "h-8 gap-1.5 px-4 text-xs"
+        : size === "lg"
+          ? "h-12 gap-2 px-8 text-sm"
+          : "h-10 gap-2 px-6 text-sm";
+
+    return (
+      <a
+        href={WHATSAPP_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={onClick}
+        className={cn(
+          "inline-flex cursor-pointer items-center justify-center rounded-full border border-white/40",
+          "bg-transparent font-semibold tracking-tight text-white",
+          "shadow-none outline-none transition-transform duration-300 ease-out",
+          "hover:scale-105 hover:bg-transparent active:scale-95",
+          "focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink",
+          sizeClass,
+          fullWidth && "w-full max-w-xs sm:max-w-none",
+          className,
+        )}
+        style={{
+          backgroundColor: "transparent",
+          backgroundImage: "none",
+          backdropFilter: "none",
+          WebkitBackdropFilter: "none",
+        }}
+      >
+        <WhatsAppIcon className="size-4" />
+        Falar com Consultor
+      </a>
+    );
+  }
+
+  return (
+    <LiquidButton
+      asChild
+      size={liquidSize}
+      tone="default"
+      className={cn(
+        "font-semibold tracking-tight text-white",
+        fullWidth && "w-full max-w-xs sm:max-w-none",
+        className,
+      )}
+    >
+      <a
+        href={WHATSAPP_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={onClick}
+      >
+        <WhatsAppIcon className="size-4" />
+        Falar com Consultor
+      </a>
+    </LiquidButton>
+  );
+}
+
+function InstagramIcon({ className = "h-4 w-4" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden>
+      <path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.9.2 2.4.5.6.2 1 .5 1.5 1 .4.4.7.9 1 1.5.2.5.4 1.2.5 2.4.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.2 1.9-.5 2.4-.2.6-.5 1-1 1.5-.4.4-.9.7-1.5 1-.5.2-1.2.4-2.4.5-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.9-.2-2.4-.5-.6-.2-1-.5-1.5-1-.4-.4-.7-.9-1-1.5-.2-.5-.4-1.2-.5-2.4C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.2-1.9.5-2.4.2-.6.5-1 1-1.5.4-.4.9-.7 1.5-1 .5-.2 1.2-.4 2.4-.5C8.4 2.2 8.8 2.2 12 2.2zm0 1.8c-3.2 0-3.5 0-4.8.1-1.1 0-1.7.2-2.1.4-.5.2-.8.4-1.1.7-.3.3-.5.6-.7 1.1-.2.4-.3 1-.4 2.1 0 1.3-.1 1.6-.1 4.8s0 3.5.1 4.8c0 1.1.2 1.7.4 2.1.2.5.4.8.7 1.1.3.3.6.5 1.1.7.4.2 1 .3 2.1.4 1.3 0 1.6.1 4.8.1s3.5 0 4.8-.1c1.1 0 1.7-.2 2.1-.4.5-.2.8-.4 1.1-.7.3-.3.5-.6.7-1.1.2-.4.3-1 .4-2.1 0-1.3.1-1.6.1-4.8s0-3.5-.1-4.8c0-1.1-.2-1.7-.4-2.1-.2-.5-.4-.8-.7-1.1-.3-.3-.6-.5-1.1-.7-.4-.2-1-.3-2.1-.4-1.3 0-1.6-.1-4.8-.1zm0 3.1a4.9 4.9 0 1 1 0 9.8 4.9 4.9 0 0 1 0-9.8zm0 8.1a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4zm6.4-8.4a1.2 1.2 0 1 1-2.3 0 1.2 1.2 0 0 1 2.3 0z" />
     </svg>
   );
 }
@@ -193,8 +301,127 @@ function AnimatedCounter({
 /* Navbar                                                                     */
 /* -------------------------------------------------------------------------- */
 
+function useActiveSection() {
+  const [active, setActive] = useState<(typeof NAV_LINKS)[number]["href"]>(
+    NAV_LINKS[0].href,
+  );
+
+  useEffect(() => {
+    const updateActive = () => {
+      const lastHref = NAV_LINKS[NAV_LINKS.length - 1].href;
+      const scrollBottom = window.scrollY + window.innerHeight;
+      const docHeight = document.documentElement.scrollHeight;
+
+      // Rodapé curto: no fim da página, força o último item (Contato)
+      if (scrollBottom >= docHeight - 120) {
+        setActive(lastHref);
+        return;
+      }
+
+      const offset = 110; // altura aproximada da navbar
+      let current: (typeof NAV_LINKS)[number]["href"] = NAV_LINKS[0].href;
+
+      for (const link of NAV_LINKS) {
+        const el = document.getElementById(link.href.slice(1));
+        if (!el) continue;
+        if (el.getBoundingClientRect().top <= offset) {
+          current = link.href;
+        }
+      }
+
+      setActive(current);
+    };
+
+    updateActive();
+    window.addEventListener("scroll", updateActive, { passive: true });
+    window.addEventListener("resize", updateActive);
+    return () => {
+      window.removeEventListener("scroll", updateActive);
+      window.removeEventListener("resize", updateActive);
+    };
+  }, []);
+
+  return [active, setActive] as const;
+}
+
+function scrollToNavTarget(href: (typeof NAV_LINKS)[number]["href"]) {
+  // Contato fica no rodapé curto: ir até o fim da página
+  if (href === "#contato") {
+    const top = Math.max(
+      0,
+      document.documentElement.scrollHeight - window.innerHeight,
+    );
+    window.scrollTo({ top, behavior: "smooth" });
+    return;
+  }
+
+  const el = document.getElementById(href.slice(1));
+  if (!el) return;
+  const navOffset = 80;
+  const top = el.getBoundingClientRect().top + window.scrollY - navOffset;
+  window.scrollTo({ top, behavior: "smooth" });
+}
+
+function NavUnderlineLink({
+  href,
+  label,
+  active,
+  onNavigate,
+  className = "",
+}: {
+  href: (typeof NAV_LINKS)[number]["href"];
+  label: string;
+  active: boolean;
+  onNavigate?: () => void;
+  className?: string;
+}) {
+  return (
+    <a
+      href={href}
+      aria-current={active ? "page" : undefined}
+      onClick={(e) => {
+        e.preventDefault();
+        onNavigate?.();
+      }}
+      className={cn(
+        "group relative inline-flex cursor-pointer items-center py-1 text-sm font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/60",
+        active ? "text-gold" : "text-zinc-200 hover:text-gold",
+        className,
+      )}
+    >
+      <span className="relative inline-block">
+        {label}
+        <span
+          aria-hidden
+          className={cn(
+            "pointer-events-none absolute inset-x-0 -bottom-0.5 h-[2px] origin-center rounded-full bg-gold transition-transform duration-300 ease-out",
+            active
+              ? "scale-x-100"
+              : "scale-x-0 group-hover:scale-x-100 group-focus-visible:scale-x-100",
+          )}
+        />
+      </span>
+    </a>
+  );
+}
+
 function Navbar() {
   const [open, setOpen] = useState(false);
+  const [active, setActive] = useActiveSection();
+
+  const handleNavClick = (
+    href: (typeof NAV_LINKS)[number]["href"],
+    closeMenu = false,
+  ) => {
+    setActive(href);
+    if (closeMenu) setOpen(false);
+    // Espera o menu mobile fechar antes de rolar (senão o Contato para no meio)
+    const delay = closeMenu ? 320 : 0;
+    window.setTimeout(() => {
+      scrollToNavTarget(href);
+      window.history.pushState(null, "", href);
+    }, delay);
+  };
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#0B1E13]/80 backdrop-blur-md">
@@ -205,29 +432,18 @@ function Navbar() {
         <ul className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 md:flex">
           {NAV_LINKS.map((link) => (
             <li key={link.href}>
-              <a
+              <NavUnderlineLink
                 href={link.href}
-                className="cursor-pointer text-sm font-medium text-zinc-200 transition-colors hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
-              >
-                {link.label}
-              </a>
+                label={link.label}
+                active={active === link.href}
+                onNavigate={() => handleNavClick(link.href)}
+              />
             </li>
           ))}
         </ul>
 
         <div className="hidden md:ml-auto md:block">
-          <motion.a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex cursor-pointer items-center gap-2 rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white shadow-lg transition-colors hover:bg-emerald-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 focus-visible:ring-offset-ink"
-            whileHover={{ y: -1 }}
-            whileTap={{ scale: 0.97 }}
-            transition={springTap}
-          >
-            <WhatsAppIcon />
-            Falar com Consultor
-          </motion.a>
+          <WhatsAppCta size="sm" tone="ghost" />
         </div>
 
         <button
@@ -245,7 +461,7 @@ function Navbar() {
       <div
         id="mobile-menu"
         aria-hidden={!open}
-        className={`overflow-hidden border-t border-white/10 bg-[#0B1E13]/95 backdrop-blur-md transition-[max-height,opacity] duration-300 md:hidden ${
+        className={`overflow-hidden border-t border-white/10 bg-transparent transition-[max-height,opacity] duration-300 md:hidden ${
           open
             ? "max-h-96 opacity-100"
             : "pointer-events-none invisible max-h-0 border-t-0 opacity-0"
@@ -254,26 +470,23 @@ function Navbar() {
         <ul className="flex flex-col gap-1 px-5 py-3">
           {NAV_LINKS.map((link) => (
             <li key={link.href}>
-              <a
+              <NavUnderlineLink
                 href={link.href}
-                className="flex min-h-11 cursor-pointer items-center rounded-lg px-3 py-3 text-sm font-medium text-zinc-200 hover:bg-white/5 hover:text-emerald-400"
-                onClick={() => setOpen(false)}
-              >
-                {link.label}
-              </a>
+                label={link.label}
+                active={active === link.href}
+                onNavigate={() => handleNavClick(link.href, true)}
+                className="min-h-11 w-full px-3 py-3"
+              />
             </li>
           ))}
           <li className="pb-2 pt-1">
-            <a
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-emerald-600 px-4 py-3 text-sm font-medium text-white shadow-lg hover:bg-emerald-500"
+            <WhatsAppCta
+              size="md"
+              fullWidth
+              tone="ghost"
+              className="max-w-none"
               onClick={() => setOpen(false)}
-            >
-              <WhatsAppIcon />
-              Falar com Consultor
-            </a>
+            />
           </li>
         </ul>
       </div>
@@ -358,7 +571,7 @@ function Hero() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <motion.img
             src="/logo.png"
-            alt="CAPCRE Agro Business"
+            alt={COMPANY.brandName}
             className="mb-3 h-28 w-auto object-contain drop-shadow-[0_8px_24px_rgba(0,0,0,0.55)] sm:h-36 md:mb-4 md:h-56"
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
@@ -391,22 +604,20 @@ function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ ...springSoft, delay: 0.55 }}
           >
-            <motion.a
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex w-full max-w-xs cursor-pointer items-center justify-center gap-2 rounded-xl bg-emerald-500 px-6 py-3.5 font-semibold text-slate-950 shadow-lg shadow-emerald-500/20 transition-colors hover:bg-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 sm:w-auto sm:py-3"
-              whileHover={{ y: -2 }}
-              whileTap={{ scale: 0.97 }}
-              transition={springTap}
-            >
-              <WhatsAppIcon />
-              Falar com Consultor
-            </motion.a>
+            <WhatsAppCta
+              size="lg"
+              fullWidth
+              className="sm:w-auto"
+            />
             <motion.a
               href="#atuacao"
-              className="inline-flex w-full max-w-xs cursor-pointer items-center justify-center rounded-xl border border-white/20 bg-white/10 px-6 py-3.5 text-white backdrop-blur-sm transition-colors hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 sm:w-auto sm:py-3"
-              whileHover={{ y: -2 }}
+              className="inline-flex w-full max-w-xs cursor-pointer items-center justify-center rounded-full border border-white/25 px-6 py-3.5 font-semibold text-white shadow-[0_8px_24px_rgba(19,147,57,0.2),inset_0_1px_0_rgba(255,255,255,0.35)] backdrop-blur-xl transition-[filter,transform] hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-green-light/60 sm:w-auto sm:py-3"
+              style={{
+                backgroundColor: "rgba(19, 147, 57, 0.52)",
+                backgroundImage:
+                  "linear-gradient(180deg, rgba(62,202,104,0.35) 0%, rgba(19,147,57,0.12) 48%, rgba(1,99,24,0.38) 100%)",
+              }}
+              whileHover={{ y: -2, scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
               transition={springTap}
             >
@@ -537,7 +748,7 @@ function ServicesSection() {
               </span>
             </>
           }
-          subtitle="Do grão à máquina, da documentação à estratégia financeira, a CAPCRE acompanha o produtor em cada etapa do ciclo."
+          subtitle="Do grão à máquina, da documentação à estratégia financeira, a CAPCRED acompanha o produtor em cada etapa do ciclo."
         />
 
         <motion.div
@@ -657,7 +868,7 @@ function Footer() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/logo.png"
-              alt="CAPCRE Agro Business"
+              alt={COMPANY.brandName}
               className="h-14 w-auto object-contain sm:h-16 md:h-[4.5rem]"
             />
           </a>
@@ -665,6 +876,11 @@ function Footer() {
             Tecnologia, soluções financeiras e assessoria inteligente do campo
             à colheita. Conectamos produtores a operações de grãos, maquinário
             e consultoria especializada.
+          </p>
+          <p className="mt-3 text-[0.8rem] leading-relaxed text-zinc-500">
+            {COMPANY.legalName}
+            <br />
+            CNPJ {COMPANY.cnpj}
           </p>
         </div>
 
@@ -699,30 +915,57 @@ function Footer() {
                 className="inline-flex min-h-9 cursor-pointer items-center gap-2 transition-colors hover:text-white"
               >
                 <WhatsAppIcon className="h-4 w-4 shrink-0" />
-                Falar com Consultor
+                {COMPANY.phoneDisplay}
               </a>
             </li>
             <li>
               <a
-                href="mailto:contato@capcre.com.br"
+                href={`mailto:${COMPANY.email}`}
                 className="inline-flex min-h-9 cursor-pointer items-center break-all transition-colors hover:text-white"
               >
-                contato@capcre.com.br
+                {COMPANY.email}
+              </a>
+            </li>
+            <li>
+              <a
+                href={COMPANY.instagramUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-9 cursor-pointer items-center gap-2 transition-colors hover:text-white"
+              >
+                <InstagramIcon className="h-4 w-4 shrink-0" />
+                {COMPANY.instagramHandle}
               </a>
             </li>
             <li className="pt-2 text-[0.8rem] leading-relaxed text-zinc-500">
-              Brasil. Atendimento a produtores e parceiros do agronegócio
+              {COMPANY.address.street}
+              <br />
+              {COMPANY.address.district} — {COMPANY.address.city}/
+              {COMPANY.address.state}
+              <br />
+              CEP {COMPANY.address.cep}
             </li>
           </ul>
         </div>
       </div>
 
-      <div className="mx-auto mt-10 flex max-w-7xl flex-col items-center justify-between gap-2 border-t border-white/10 px-5 pt-6 text-center text-[0.7rem] text-zinc-500 sm:text-xs md:mt-12 md:flex-row md:gap-3 md:px-8 md:text-left">
+      <div className="mx-auto mt-10 flex max-w-7xl flex-col items-center justify-between gap-3 border-t border-white/10 px-5 pt-6 text-center text-[0.7rem] text-zinc-500 sm:text-xs md:mt-12 md:flex-row md:gap-3 md:px-8 md:text-left">
         <p>
-          © {new Date().getFullYear()} CAPCRE Agro Business. Todos os direitos
+          © {new Date().getFullYear()} {COMPANY.brandName}. Todos os direitos
           reservados.
         </p>
         <p className="tracking-wide">Do campo à colheita.</p>
+        <p>
+          Desenvolvido por{" "}
+          <a
+            href="https://www.instagram.com/lf_system/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="cursor-pointer font-medium text-zinc-400 transition-colors hover:text-gold"
+          >
+            LF_SYSTEM
+          </a>
+        </p>
       </div>
     </footer>
   );
