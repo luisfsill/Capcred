@@ -609,20 +609,17 @@ function Hero() {
               fullWidth
               className="sm:w-auto"
             />
-            <motion.a
+            <a
               href="#atuacao"
-              className="inline-flex w-full max-w-xs cursor-pointer items-center justify-center rounded-full border border-white/25 px-6 py-3.5 font-semibold text-white shadow-[0_8px_24px_rgba(19,147,57,0.2),inset_0_1px_0_rgba(255,255,255,0.35)] backdrop-blur-xl transition-[filter,transform] hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-green-light/60 sm:w-auto sm:py-3"
+              className="inline-flex w-full max-w-xs cursor-pointer items-center justify-center rounded-full border border-white/25 px-6 py-3.5 font-semibold text-white shadow-[0_8px_24px_rgba(19,147,57,0.2),inset_0_1px_0_rgba(255,255,255,0.35)] backdrop-blur-xl transition-transform duration-300 ease-out hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-green-light/60 sm:w-auto sm:py-3"
               style={{
-                backgroundColor: "rgba(19, 147, 57, 0.52)",
+                backgroundColor: "rgba(19, 147, 57, 0.36)",
                 backgroundImage:
-                  "linear-gradient(180deg, rgba(62,202,104,0.35) 0%, rgba(19,147,57,0.12) 48%, rgba(1,99,24,0.38) 100%)",
+                  "linear-gradient(180deg, rgba(62,202,104,0.25) 0%, rgba(19,147,57,0.08) 48%, rgba(1,99,24,0.28) 100%)",
               }}
-              whileHover={{ y: -2, scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              transition={springTap}
             >
               Conhecer Atuação
-            </motion.a>
+            </a>
           </motion.div>
         </motion.div>
 

@@ -91,10 +91,10 @@ const liquidbuttonVariants = cva(
 /** Dourado da marca — liquid glass. */
 const LIQUID_GOLD = {
   default: {
-    fill: "rgba(212, 179, 106, 0.52)",
-    hover: "rgba(212, 179, 106, 0.68)",
+    fill: "rgba(212, 179, 106, 0.36)",
+    hover: "rgba(212, 179, 106, 0.5)",
     gradient:
-      "linear-gradient(180deg, rgba(240,217,160,0.45) 0%, rgba(212,179,106,0.15) 48%, rgba(168,130,55,0.42) 100%)",
+      "linear-gradient(180deg, rgba(240,217,160,0.32) 0%, rgba(212,179,106,0.1) 48%, rgba(168,130,55,0.3) 100%)",
   },
   /** Totalmente transparente — navbar (sem troca de cor no hover) */
   ghost: {
