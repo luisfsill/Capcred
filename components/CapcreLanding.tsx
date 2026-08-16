@@ -917,14 +917,6 @@ function Footer() {
             </li>
             <li>
               <a
-                href={`mailto:${COMPANY.email}`}
-                className="inline-flex min-h-9 cursor-pointer items-center break-all transition-colors hover:text-white"
-              >
-                {COMPANY.email}
-              </a>
-            </li>
-            <li>
-              <a
                 href={COMPANY.instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -932,6 +924,14 @@ function Footer() {
               >
                 <InstagramIcon className="h-4 w-4 shrink-0" />
                 {COMPANY.instagramHandle}
+              </a>
+            </li>
+            <li>
+              <a
+                href={`mailto:${COMPANY.email}`}
+                className="inline-flex min-h-9 cursor-pointer items-center break-all transition-colors hover:text-white"
+              >
+                {COMPANY.email}
               </a>
             </li>
             <li className="pt-2 text-[0.8rem] leading-relaxed text-zinc-500">
